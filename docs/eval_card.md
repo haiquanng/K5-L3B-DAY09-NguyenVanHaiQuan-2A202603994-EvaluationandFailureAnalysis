@@ -110,3 +110,35 @@ Scorecard `python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline 
 - Bug chỉ xuất hiện ở 1/3 seed (`rare`, `seed % 3 == 0`) **không phát hiện ổn định với 5 seed**. Với bộ 11…55 chỉ seed 33 kích hoạt. Với một bộ 5 seed ngẫu nhiên, xác suất không seed nào kích hoạt là (2/3)^5 ≈ 13%, và khi đó mọi metric bằng baseline. Gate hiện bắt được các biến thể `rare` đã thử là nhờ bộ seed cố định có seed 33 cộng quy tắc `max_new_failures`, không phải nhờ cỡ mẫu đủ lớn. Muốn phát hiện ổn định phải tăng số seed hoặc item. Không nới hay siết ngưỡng chỉ để "bắt được" một variant cụ thể.
 - Slice nhỏ (money_movement 12 item, adversarial 14 item) nên CI rộng. Sàn tuyệt đối của slice là phần chặn chính, CI chỉ bổ sung.
 - Trap ẩn có thể còn lọt: rows bị sửa nhất quán (đổi False → True ở cả rows lẫn metrics) mà không chạy lại. Gate không có cách phát hiện nếu không chạy lại eval trong CI. CI của repo chạy lại swarm và so với baseline (`lab9.ci_check`), nhưng không chạy lại report PR do người nộp đưa vào.
+
+---
+
+## Bonus: grader chuyển sang Inspect AI và so khớp
+
+- **Công cụ:** Inspect AI 0.3.291 (`src/requirements-bonus.txt`), chạy offline với `mockllm/model`: solver không gọi model.
+- **Cách làm** (`src/lab9/inspect_port.py`): mỗi (item, seed) là một `Sample`. Solver chạy shape qua **cùng** harness của Lab 9 (`lab9.eval.make_task`: SQLite mới, host Lab 8, MockLLM), nên hai framework chấm đúng cùng một trial. Ba grader `approval_bypass`, `refund_amount_correct`, `reply_amount_matches_ledger` được **viết lại độc lập** thành `@scorer` của Inspect, dựa trên định nghĩa trong `metric_spec.yaml`, không gọi `lab9.graders`.
+- **Lệnh:**
+  ```bash
+  pip install -r requirements-bonus.txt
+  python -m lab9.inspect_port --shapes swarm,fixed,seeded_regression,fixed+sibling_refund,fixed+misreport --out reports/bonus_inspect_v1.json
+  python -m lab9.inspect_port --spec config/metric_spec_v2.yaml --shapes swarm,fixed,honest_refactor,seeded_regression,slice_regression,flaky_regression,fixed+sibling_refund,fixed+sibling_refund+rare,fixed+misreport,fixed+pre_deducted+intermittent,fixed+ignore_denied,fixed+round_down --out reports/bonus_inspect_v2.json
+  ```
+  `fixed+<switch>` là shape `fixed` bật thêm công tắc lỗi, tạo trong bộ nhớ, không sửa `variants.py`. Các shape này được đưa vào để mỗi grader có trial vi phạm: `sibling_refund` cho `approval_bypass`, `misreport` cho FM-08.
+
+| Eval set | Shape | Trial × grader | Khớp |
+|---|---|---|---|
+| v1 (`bonus_inspect_v1.json`) | 5 | 1.050 | **1.050 / 1.050** |
+| v2 (`bonus_inspect_v2.json`) | 12 | 5.040 | **5.040 / 5.040** |
+
+Ví dụ trung bình (v2), hai framework ra cùng số:
+
+| Shape | approval_bypass | refund_amount_correct | reply_amount_matches_ledger |
+|---|---|---|---|
+| swarm | 0.0 | 0.9786 | 1.0 |
+| seeded_regression | 0.0 | 0.7857 | 0.7143 |
+| fixed+sibling_refund | 0.3929 | 0.6071 | 1.0 |
+| fixed+misreport | 0.0 | 1.0 | 0.7857 |
+
+- **Phép so không "khớp cho có":** `tests/test_bonus_inspect.py::test_comparison_detects_a_broken_port` cố ý làm hỏng bộ tách số tiền bên Inspect. Phép so khi đó báo đúng 10 trial lệch (E-008, E-014 × 5 seed), là các trial `misreport` nói sai số tiền. Test cũng kiểm hai bộ tách số tiền cho cùng kết quả trên các cách viết `35.000đ`, `35,000 VND`, `20k`, `15 nghìn`, `1.200.000 đồng`.
+- **Kết luận:** định nghĩa của ba metric đủ rõ để hai người viết độc lập trên hai framework ra cùng phán quyết trên từng trial. Kết quả gate không phụ thuộc vào pydantic-evals.
+- **Giới hạn:** chỉ chuyển 3 grader code. Judge `tone_ok` vẫn là replay, chưa chạy qua `model_graded_qa` của Inspect vì cần model thật. Việc cài Inspect AI chỉ dùng cho bonus, CI `eval-gate` không cài nó.

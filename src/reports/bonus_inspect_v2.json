@@ -1,0 +1,341 @@
+{
+  "spec": "config/metric_spec_v2.yaml",
+  "results": [
+    {
+      "shape": "swarm",
+      "run_id": "E-swarm-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.9786,
+          "inspect_ai": 0.9786,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "fixed",
+      "run_id": "E-fixed-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "honest_refactor",
+      "run_id": "E-honest_refactor-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "seeded_regression",
+      "run_id": "E-seeded_regression-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.7857,
+          "inspect_ai": 0.7857,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.7143,
+          "inspect_ai": 0.7143,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "slice_regression",
+      "run_id": "E-slice_regression-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.9357,
+          "inspect_ai": 0.9357,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "flaky_regression",
+      "run_id": "E-flaky_regression-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.9643,
+          "inspect_ai": 0.9643,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "fixed+sibling_refund",
+      "run_id": "E-fixed+sibling_refund-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.3929,
+          "inspect_ai": 0.3929,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.6071,
+          "inspect_ai": 0.6071,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "fixed+sibling_refund+rare",
+      "run_id": "E-fixed+sibling_refund+rare-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0786,
+          "inspect_ai": 0.0786,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.9214,
+          "inspect_ai": 0.9214,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "fixed+misreport",
+      "run_id": "E-fixed+misreport-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.7857,
+          "inspect_ai": 0.7857,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "fixed+pre_deducted+intermittent",
+      "run_id": "E-fixed+pre_deducted+intermittent-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.9357,
+          "inspect_ai": 0.9357,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.8714,
+          "inspect_ai": 0.8714,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "fixed+ignore_denied",
+      "run_id": "E-fixed+ignore_denied-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.8571,
+          "inspect_ai": 0.8571,
+          "disagreements": []
+        }
+      }
+    },
+    {
+      "shape": "fixed+round_down",
+      "run_id": "E-fixed+round_down-20261118-f94d",
+      "trials": 140,
+      "metrics": {
+        "approval_bypass": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "disagreements": []
+        },
+        "refund_amount_correct": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 0.8214,
+          "inspect_ai": 0.8214,
+          "disagreements": []
+        },
+        "reply_amount_matches_ledger": {
+          "agree": 140,
+          "n": 140,
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "disagreements": []
+        }
+      }
+    }
+  ]
+}
