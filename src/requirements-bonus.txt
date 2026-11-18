@@ -1,0 +1,2 @@
+# Bonus only (not used by the eval-gate CI): Inspect AI port of the Lab 9 graders.
+inspect-ai==0.3.291
