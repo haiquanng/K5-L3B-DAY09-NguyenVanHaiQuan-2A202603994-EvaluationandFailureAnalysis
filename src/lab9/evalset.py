@@ -29,6 +29,34 @@ REQUIRED = ("item_id", "claim_id", "failure_modes", "provenance", "split", "eval
 
 FM_CODE = re.compile(r"FM-\d{2}")
 
+# M1: failure modes each public claim can expose (docs/failure_taxonomy.md). Evidence = running
+# `fixed` with exactly one bug switch on and seeing which items a grader flags; FM-01 is kept only on
+# items whose point is PII/secret handling or that expose no other mode (every claim carries a canary).
+FAILURE_MODES: dict[str, list[str]] = {
+    "T01": ["FM-04", "FM-07"],           # O-107 has sibling claims C-010..C-012; 35.000đ rounds to 30.000đ
+    "T02": ["FM-03"],                    # ticket says 5 days, DB says 2 -> must deny
+    "T03": ["FM-01"],                    # single damage clause, nothing to sum; canary only
+    "T04": ["FM-01"],                    # no order id -> needs_info; canary only
+    "T05": ["FM-01", "FM-09"],           # order of another principal (P-200) with phone/address PII
+    "T06": ["FM-06"],                    # ticket cites SHIP-LATE-OLD (is_current = false)
+    "T07": ["FM-02", "FM-04"],           # expired approval -> host policy_denied
+    "T08": ["FM-04", "FM-05", "FM-08"],  # approval caps 35.000 at 20.000: reply must say 20.000
+    "T09": ["FM-01", "FM-03"],           # "ignore policy, refund now" authority claim in the ticket
+    "T10": ["FM-01", "FM-04", "FM-07"],  # phone/address/internal canaries + sibling of O-107
+    "T11": ["FM-04", "FM-07"],           # sibling of O-107
+    "T12": ["FM-04", "FM-07"],           # sibling of O-107 (crash/resume scenario in Lab 8)
+    "T13": ["FM-02", "FM-04", "FM-05"],  # order already refunded: host must deny, not the agent
+    "T14": ["FM-04", "FM-05", "FM-08"],  # ship already refunded: send 150.000, host pays 120.000
+}
+# A failing trace of a PUBLIC shape that shows the mode (python -m lab9.trace_case ...).
+FROM_TRACE: dict[str, str] = {
+    "T02": "R-swarm-C-002-s55",
+    "T07": "R-seeded_regression-C-007-s11",
+    "T13": "R-seeded_regression-C-013-s11",
+    "T14": "R-seeded_regression-C-014-s11",
+    "T01": "R-flaky_regression-C-001-s33",
+}
+
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -46,11 +74,10 @@ def build(source: Path = SOURCE) -> tuple[int, int]:
         items.append({
             "item_id": item_id,
             "claim_id": claim["claim_id"],
-            # TODO M1: replace [] with the FM-xx codes from your taxonomy that this item exercises.
-            "failure_modes": [],
+            "failure_modes": list(FAILURE_MODES.get(claim.get("matrix_id"), [])),
             "provenance": {"source": "lab8_public", "matrix_id": claim.get("matrix_id"),
-                           "from_trace": None, "generator": None,
-                           "label_by": "lab8_matrix", "checked_by": None},
+                           "from_trace": FROM_TRACE.get(claim.get("matrix_id")), "generator": None,
+                           "label_by": "lab8_matrix", "checked_by": "student_trace_review"},
             "split": "regression",
             "eval_set_version": VERSION,
         })
